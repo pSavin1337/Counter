@@ -13,16 +13,6 @@ class CounterViewModel: ViewModel() {
     private val counterLiveData = MutableLiveData<Int>()
     fun getCounterLiveData(): LiveData<Int> = counterLiveData
 
-    private fun onMinusButtonClick() {
-        counter.decrease()
-        counterLiveData.postValue(counter.getCounter())
-    }
-
-    private fun onPlusButtonClick() {
-        counter.increase()
-        counterLiveData.postValue(counter.getCounter())
-    }
-
     fun onMinusButtonTouch(event: MotionEvent) {
         if (event.action == MotionEvent.ACTION_DOWN) {
             counter.multipleDecreaseWithDelay {
@@ -31,7 +21,8 @@ class CounterViewModel: ViewModel() {
         }
         if (event.action == MotionEvent.ACTION_UP) {
             counter.cancelMultipleOperation()
-            onMinusButtonClick()
+            counter.decrease()
+            counterLiveData.postValue(counter.getCounter())
         }
     }
 
@@ -43,7 +34,8 @@ class CounterViewModel: ViewModel() {
         }
         if (event.action == MotionEvent.ACTION_UP) {
             counter.cancelMultipleOperation()
-            onPlusButtonClick()
+            counter.increase()
+            counterLiveData.postValue(counter.getCounter())
         }
     }
 
