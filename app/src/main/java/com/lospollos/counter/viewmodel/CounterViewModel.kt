@@ -20,7 +20,7 @@ class CounterViewModel: ViewModel() {
             }
         }
         if (event.action == MotionEvent.ACTION_UP) {
-            counter.cancelMultipleOperation()
+            counter.cancelMultipleDecreaseOperation()
             counter.decrease()
             counterLiveData.postValue(counter.getCounter())
         }
@@ -33,7 +33,7 @@ class CounterViewModel: ViewModel() {
             }
         }
         if (event.action == MotionEvent.ACTION_UP) {
-            counter.cancelMultipleOperation()
+            counter.cancelMultipleIncreaseOperation()
             counter.increase()
             counterLiveData.postValue(counter.getCounter())
         }

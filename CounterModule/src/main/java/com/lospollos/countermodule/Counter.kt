@@ -10,8 +10,10 @@ class Counter @JvmOverloads constructor(
     private val periodicMillis: Long = 20L
 ) {
 
-    private lateinit var timer: Timer
-    private val timerName = "timer"
+    private lateinit var minusTimer: Timer
+    private val minusTimerName = "minusTimer"
+    private lateinit var plusTimer: Timer
+    private val plusTimerName = "plusTimer"
 
     private var counter: Int = 0
 
@@ -29,8 +31,8 @@ class Counter @JvmOverloads constructor(
 
     fun multipleDecreaseWithDelay(delayMillis: Long = 500L, onDecrease: () -> Unit) {
         val currentDate = Date().time
-        timer = timer(
-            timerName,
+        minusTimer = timer(
+            minusTimerName,
             period = periodicMillis,
             startAt = Date(currentDate + delayMillis)
         ) {
@@ -41,8 +43,8 @@ class Counter @JvmOverloads constructor(
 
     fun multipleIncreaseWithDelay(delayMillis: Long = 500L, onIncrease: () -> Unit) {
         val currentDate = Date().time
-        timer = timer(
-            timerName,
+        plusTimer = timer(
+            plusTimerName,
             period = periodicMillis,
             startAt = Date(currentDate + delayMillis)
         ) {
@@ -51,8 +53,12 @@ class Counter @JvmOverloads constructor(
         }
     }
 
-    fun cancelMultipleOperation() {
-        timer.cancel()
+    fun cancelMultipleDecreaseOperation() {
+        minusTimer.cancel()
+    }
+
+    fun cancelMultipleIncreaseOperation() {
+        plusTimer.cancel()
     }
 
     fun getCounter() = counter
